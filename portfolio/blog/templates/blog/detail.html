@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>{{ post.title }}</h1>
-<h5>{{ post.created_at }}</h5>
-<p>{{ post.description }}</p>
+<h5>-- {{ post.created_at|date:'F jS Y'|upper }} --</h5>
+<p>{{ post.description|safe }}</p>
 </body>
 </html>

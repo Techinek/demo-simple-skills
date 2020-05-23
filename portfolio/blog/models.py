@@ -10,3 +10,6 @@ class BlogPost(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail_post', kwargs={'post_slug': self.slug})
+
+    def __str__(self):
+        return self.title
