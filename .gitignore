@@ -114,3 +114,4 @@ GitHub.sublime-settings
 #Local machine
 .idea/
 /app/kuskovan/local.py
+/portfolio/project/static/project/photos/
