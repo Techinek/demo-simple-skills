@@ -1,20 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<hr>
-<a href="{% url 'home' %}">Homepage</a>
-<h1>My Blog</h1>
-<h2>I've written {{ posts.count }} article{{ posts.count|pluralize }}</h2>
-{% for post in posts %}
-    <a href="{{ post.get_absolute_url }}"><h2>{{ post.title }}</h2></a>
-    <h5>{{ post.created_at|date:'M d Y'|upper }}</h5>
-    <p>{{ post.description|striptags|truncatechars_html:100 }}</p>
-    <br>
-    <hr>
-{% endfor %}
-</body>
-</html>
+{% extends 'project/base.html' %}
+{% load static %}
+{% block navbar %}
+        <nav class="navbar navbar-expand-md navbar-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="navbarNavAltMarkup">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link" href="{% static 'project/docs/hh-dron.pdf' %}">Resume</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </nav>
+
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">My Blog</h1>
+    <h3 class="text-center mb-5">I've written {{ posts.count }} article{{ posts.count|pluralize }}</h3>
+    {% for post in posts %}
+        <div class="row justify-content-center my-3">
+            <div class="col-md-10">
+                <a href="{{ post.get_absolute_url }}"><h2>{{ post.title }}</h2></a>
+                <h5 class="text-muted">{{ post.created_at|date:'M d Y'|upper }}</h5>
+                <h4>{{ post.description|striptags|truncatechars_html:100 }}</h4>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

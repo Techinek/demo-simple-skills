@@ -1,12 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>{{ post.title }}</h1>
-<h5>-- {{ post.created_at|date:'F jS Y'|upper }} --</h5>
-<p>{{ post.description|safe }}</p>
-</body>
-</html>
+{% extends 'project/base.html' %}
+{% load static %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-md navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="navbarNavAltMarkup">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link" href="{% url 'all_blogs' %}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link" href="{% static 'project/docs/hh-dron.pdf' %}">Resume</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-5"> {{ post.title }} </h1>
+    <h5 class="text-center text-muted mb-5">-- {{ post.created_at|date:'F jS Y'|upper }} --</h5>
+    <p>{{ post.description|safe }}</p>
+{% endblock %}
