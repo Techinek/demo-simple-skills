@@ -8,7 +8,6 @@ from django.contrib.auth import login, logout, authenticate
 def home(request):
     return render(request, 'todowoo/home.html')
 
-
 def signup_user(request):
     if request.method == 'GET':
         return render(request, 'todowoo/signup_user.html', {'form': UserCreationForm()})
@@ -35,9 +34,6 @@ def login_user(request):
         else:
             login(request, user)
             return redirect('current_todos')
-
-
-
 
 def logout_user(request):
     if request.method == 'POST':
