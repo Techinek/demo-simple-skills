@@ -4,9 +4,12 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 
+from .forms import TodoForm
+
 
 def home(request):
     return render(request, 'todowoo/home.html')
+
 
 def signup_user(request):
     if request.method == 'GET':
@@ -24,6 +27,7 @@ def signup_user(request):
         else:
             return render(request, 'todowoo/signup_user.html', {'form': UserCreationForm(), 'error': 'Passwords did not match'})
 
+
 def login_user(request):
     if request.method == 'GET':
         return render(request, 'todowoo/login_user.html', {'form': AuthenticationForm()})
@@ -35,10 +39,26 @@ def login_user(request):
             login(request, user)
             return redirect('current_todos')
 
+
 def logout_user(request):
     if request.method == 'POST':
         logout(request)
         return redirect('home')
+
+
+def create_todos(request):
+    if request.method == 'GET':
+        return render(request, 'todowoo/create_todo.html', {'form': TodoForm()})
+    else:
+        try:
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('current_todos')
+        except ValueError:
+            return render(request, 'todowoo/create_todo.html', {'form': TodoForm(), 'error': 'Bad data passed in. Try again'})
+
 
 def current_todos(request):
     return render(request, 'todowoo/current_todos.html')
