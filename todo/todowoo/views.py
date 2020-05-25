@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.utils import timezone
 
 from .forms import TodoForm
 from .models import Todo
@@ -78,6 +79,21 @@ def view_todo(request, todo_pk):
             return redirect('current_todos')
         except ValueError:
             return render(request, 'todowoo/detail_todo.html', {'todo': todo, 'form': form, 'error': 'Bad info'})
+
+
+def complete_todo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == "POST":
+        todo.completed = timezone.now()
+        todo.save()
+        return redirect('current_todos')
+
+def delete_todo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.delete()
+        return redirect('current_todos')
+
 
 
 
