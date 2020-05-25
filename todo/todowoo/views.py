@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 
 from .forms import TodoForm
+from .models import Todo
 
 
 def home(request):
@@ -61,5 +62,6 @@ def create_todos(request):
 
 
 def current_todos(request):
-    return render(request, 'todowoo/current_todos.html')
+    todos = Todo.objects.filter(user=request.user, completed__isnull=True)
+    return render(request, 'todowoo/current_todos.html', {'todos': todos})
 
