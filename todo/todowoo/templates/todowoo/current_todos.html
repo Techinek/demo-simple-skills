@@ -5,7 +5,7 @@
     <ul>
     {% for todo in todos %}
         <li>
-
+            <a href="{% url 'view_todo' todo.id %}">
         {% if todo.important %}<b>{% endif %}
             {{ todo.title }}
          {% if todo.important %}</b>{% endif %}
@@ -13,6 +13,7 @@
         {% if todo.memo %}
             - {{ todo.memo|safe|truncatechars:30 }}
         {% endif %}
+            </a>
         </li>
     {% endfor %}
     </ul>
